@@ -16,11 +16,13 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.viewModels
 import com.hbsoft.airhorn.MainActivity
 import com.hbsoft.airhorn.R
+import com.hbsoft.airhorn.fragments.viewModel.HomeViewModel
 
 const val TAG = "button"
-const val VIBRATIONTIME = 60  //seconds
+const val VIBRATIONTIME = 2  //seconds
 
 class HomeFragment : Fragment(), View.OnTouchListener {
 
@@ -28,6 +30,8 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     var shouldVibrate = true
     lateinit var button: ImageButton
     lateinit var vibrator: Vibrator
+
+    val mHomeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,12 +67,14 @@ class HomeFragment : Fragment(), View.OnTouchListener {
                 Toast.makeText(requireContext(), "started down", Toast.LENGTH_SHORT).show()
                 Log.i(TAG, "onTouch: action down")
                 startVibrate()
+                mHomeViewModel.startAudio()
                 return false
             }
             MotionEvent.ACTION_UP ->{
                 Log.i(TAG, "onTouch: action up")
                 Toast.makeText(requireContext(), "started up", Toast.LENGTH_SHORT).show()
                 stopVibrate()
+                mHomeViewModel.stopAudio()
                 return false
             }
             else -> return false
