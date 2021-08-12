@@ -22,7 +22,7 @@ import com.hbsoft.airhorn.R
 import com.hbsoft.airhorn.fragments.viewModel.HomeViewModel
 
 const val TAG = "button"
-const val VIBRATIONTIME = 2  //seconds
+const val VIBRATIONTIME = 30  //seconds
 
 class HomeFragment : Fragment(), View.OnTouchListener {
 
@@ -50,7 +50,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     fun startVibrate(){
         if(shouldVibrate && vibrator.hasVibrator()){
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                vibrator.vibrate(VibrationEffect.createOneShot(1000 * VIBRATIONTIME.toLong(), VibrationEffect.DEFAULT_AMPLITUDE))         // 15 seconds
+                vibrator.vibrate(VibrationEffect.createOneShot(1000 * VIBRATIONTIME.toLong(), VibrationEffect.DEFAULT_AMPLITUDE))
             }
             else{
                 vibrator.vibrate(1000* VIBRATIONTIME.toLong())
@@ -64,7 +64,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         when(event?.action){
             MotionEvent.ACTION_DOWN -> {
-                Toast.makeText(requireContext(), "started down", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "down", Toast.LENGTH_SHORT).show()
                 Log.i(TAG, "onTouch: action down")
                 startVibrate()
                 mHomeViewModel.startAudio()
@@ -72,7 +72,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
             }
             MotionEvent.ACTION_UP ->{
                 Log.i(TAG, "onTouch: action up")
-                Toast.makeText(requireContext(), "started up", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "up", Toast.LENGTH_SHORT).show()
                 stopVibrate()
                 mHomeViewModel.stopAudio()
                 return false
