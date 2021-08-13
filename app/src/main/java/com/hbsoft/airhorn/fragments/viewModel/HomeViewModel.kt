@@ -75,8 +75,8 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
             .setBufferSizeInBytes(audioTrackBufferSize)
             .setTransferMode(AudioTrack.MODE_STREAM)
             .build()
-        val inputStream1 = application.applicationContext.resources.openRawResource(R.raw.intro)
-        val inputStream2 = application.applicationContext.resources.openRawResource(R.raw.loop)
+        val inputStream1 = application.applicationContext.resources.openRawResource(R.raw.intro_a)
+        val inputStream2 = application.applicationContext.resources.openRawResource(R.raw.loop_a)
         val cut:Long = 44L
         try {
             inputStream1.skip(cut)
