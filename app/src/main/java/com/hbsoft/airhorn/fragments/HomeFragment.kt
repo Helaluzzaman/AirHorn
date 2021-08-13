@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.hbsoft.airhorn.MainActivity
@@ -42,7 +43,6 @@ class HomeFragment : Fragment(), View.OnTouchListener {
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
-        vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         button = view.findViewById(R.id.b_press)
         button.setOnTouchListener(this)
         return view
@@ -68,6 +68,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
                 Log.i(TAG, "onTouch: action down")
                 startVibrate()
                 mHomeViewModel.startAudio()
+                button.setImageDrawable(getDrawable(requireContext(), R.drawable.pressed))
                 return false
             }
             MotionEvent.ACTION_UP ->{
@@ -75,6 +76,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
                 Toast.makeText(requireContext(), "up", Toast.LENGTH_SHORT).show()
                 stopVibrate()
                 mHomeViewModel.stopAudio()
+                button.setImageDrawable(getDrawable(requireContext(), R.drawable.unpressed))
                 return false
             }
             else -> return false
