@@ -1,5 +1,6 @@
 package com.hbsoft.airhorn.fragments
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.os.Build
@@ -7,17 +8,15 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.hbsoft.airhorn.MainActivity
 import com.hbsoft.airhorn.R
 import com.hbsoft.airhorn.fragments.viewModel.HomeViewModel
@@ -38,10 +37,12 @@ class HomeFragment : Fragment(), View.OnTouchListener {
         super.onCreate(savedInstanceState)
         vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         val view =  inflater.inflate(R.layout.fragment_home, container, false)
         button = view.findViewById(R.id.b_press)
         button.setOnTouchListener(this)
@@ -81,5 +82,22 @@ class HomeFragment : Fragment(), View.OnTouchListener {
             }
             else -> return false
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.settingsFragment_menu ->  findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
+            R.id.aboutFragment_menu -> Toast.makeText(requireContext(), "wait bro", Toast.LENGTH_SHORT)
+                .show()
+                
+        }
+
+       
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.navigation, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }
