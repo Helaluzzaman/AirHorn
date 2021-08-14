@@ -1,0 +1,11 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/general_header">
+
+        <SwitchPreference
+            app:key="vibrate"
+            app:title="Vibrate"
+            app:summary="@string/vibrate_summery" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

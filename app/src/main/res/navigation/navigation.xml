@@ -10,4 +10,8 @@
         android:name="com.hbsoft.airhorn.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.hbsoft.airhorn.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

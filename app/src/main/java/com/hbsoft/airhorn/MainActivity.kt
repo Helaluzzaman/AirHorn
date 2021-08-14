@@ -2,13 +2,14 @@ package com.hbsoft.airhorn
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Vibrator
+import androidx.appcompat.widget.Toolbar
 
 class MainActivity : AppCompatActivity() {
+    lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
-
+        toolbar = findViewById(R.id.topAppBar)
+        setSupportActionBar(toolbar)
     }
 }
