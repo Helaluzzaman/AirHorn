@@ -5,6 +5,7 @@
         <SwitchPreference
             app:key="vibrate"
             app:title="Vibrate"
+            app:defaultValue="true"
             app:summary="@string/vibrate_summery" />
     </PreferenceCategory>
 

@@ -1,8 +1,10 @@
 package com.hbsoft.airhorn.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
@@ -17,6 +19,7 @@ import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.hbsoft.airhorn.MainActivity
 import com.hbsoft.airhorn.R
 import com.hbsoft.airhorn.fragments.viewModel.HomeViewModel
@@ -25,9 +28,6 @@ const val TAG = "button"
 const val VIBRATIONTIME = 30  //seconds
 
 class HomeFragment : Fragment(), View.OnTouchListener {
-
-
-    var shouldVibrate = true
     lateinit var button: ImageButton
     lateinit var vibrator: Vibrator
 
@@ -36,6 +36,9 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        shouldVibrate = sharedPreferences.getBoolean("vibrate", true)
+        Log.i("vibrate", "onCreate: $shouldVibrate")
     }
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -99,5 +102,8 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.navigation, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+    companion object{
+        var shouldVibrate = true
     }
 }
