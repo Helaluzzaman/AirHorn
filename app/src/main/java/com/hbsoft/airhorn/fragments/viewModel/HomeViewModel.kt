@@ -37,16 +37,18 @@ class HomeViewModel(application: Application): AndroidViewModel(application){
 
     }
 
+//    fun stopAudio(){
+//        audioTrack.stop()
+//    }
     fun stopAudio(){
-        audioTrack.stop()
+        audioTrack.pause()
+        audioTrack.flush()
     }
     fun setAudioTrackDeprecated(application: Application){
         val audioTrackBufferSize = AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_IN_LEFT, AudioFormat.ENCODING_PCM_16BIT)
         audioTrack = AudioTrack(AudioManager.STREAM_MUSIC, 44100, AudioFormat.CHANNEL_IN_LEFT,AudioFormat.ENCODING_PCM_16BIT, audioTrackBufferSize, AudioTrack.MODE_STREAM )
-        val inputStream1 = application.applicationContext.resources.openRawResource(R.raw.intro)
-        val inputStream2 = application.applicationContext.resources.openRawResource(R.raw.loop)
-
-
+        val inputStream1 = application.applicationContext.resources.openRawResource(R.raw.intro_a)
+        val inputStream2 = application.applicationContext.resources.openRawResource(R.raw.loop_a)
         val cut:Long = 44L
         try {
             inputStream1.skip(cut)

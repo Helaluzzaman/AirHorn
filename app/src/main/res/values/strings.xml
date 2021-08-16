@@ -9,7 +9,7 @@
     <string name="greeting">Greeting:</string>
     <string name="company_name_copy_right"><![CDATA[Copyright © HBSoftware]]></string>
     <string name="attribution1">- App Idea based on \'Air Horn\' (Google play store).</string>
-    <string name="attribution3">- Launch Icon resource from Flaticon(www.flaticon.com).</string>
+    <string name="attribution3">- Launch Icon resource from Flaticon(flaticon.com).</string>
     <string name="author">Author:</string>
     <string name="AuthorName">- Helal Uzzaman Hasib</string>
     <string name="privacy_policy"><a href = "https://gitlab.com/hbsoftwaremobile/privacy-policy/-/wikis/Air-Horn">Privacy Policy</a></string>

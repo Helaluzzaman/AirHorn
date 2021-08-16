@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.media.AudioTrack
 import android.os.*
 import android.util.Log
 import android.view.*
@@ -41,7 +42,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
 
     private fun setUpWakeLock() {
         val pm = activity?.getSystemService(Context.POWER_SERVICE) as PowerManager
-        wakeLock = pm.newWakeLock((PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP), "myapp:wakelock")
+        wakeLock = pm.newWakeLock((PowerManager.FULL_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE), "myapp:wakelock")
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -82,7 +83,6 @@ class HomeFragment : Fragment(), View.OnTouchListener {
             }
             MotionEvent.ACTION_UP ->{
                 Log.i(TAG, "onTouch: action up")
-                Toast.makeText(requireContext(), "up", Toast.LENGTH_SHORT).show()
                 stopVibrate()
                 mHomeViewModel.stopAudio()
                 button.setImageDrawable(getDrawable(requireContext(), R.drawable.unpressed))
@@ -97,7 +97,6 @@ class HomeFragment : Fragment(), View.OnTouchListener {
         when(item.itemId){
             R.id.settingsFragment_menu ->  findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
             R.id.aboutFragment_menu -> findNavController().navigate(R.id.action_homeFragment_to_aboutFragment)
-                
         }
 
        
@@ -110,5 +109,17 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     }
     companion object{
         var shouldVibrate = true
+    }
+
+    override fun onStop() {
+
+        if (wakeLock.isHeld) {
+            wakeLock.release()
+        }
+        if (mHomeViewModel.audioTrack.playState == AudioTrack.PLAYSTATE_PLAYING) {
+            mHomeViewModel.stopAudio()
+        }
+        vibrator.cancel()
+        super.onStop()
     }
 }
