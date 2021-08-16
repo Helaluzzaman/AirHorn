@@ -5,10 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
-import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.os.*
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -30,6 +27,7 @@ const val VIBRATIONTIME = 30  //seconds
 class HomeFragment : Fragment(), View.OnTouchListener {
     lateinit var button: ImageButton
     lateinit var vibrator: Vibrator
+    lateinit var wakeLock: PowerManager.WakeLock
 
     val mHomeViewModel: HomeViewModel by viewModels()
 
@@ -38,8 +36,14 @@ class HomeFragment : Fragment(), View.OnTouchListener {
         vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         shouldVibrate = sharedPreferences.getBoolean("vibrate", true)
-        Log.i("vibrate", "onCreate: $shouldVibrate")
+        setUpWakeLock()
     }
+
+    private fun setUpWakeLock() {
+        val pm = activity?.getSystemService(Context.POWER_SERVICE) as PowerManager
+        wakeLock = pm.newWakeLock((PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP), "myapp:wakelock")
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,14 +69,15 @@ class HomeFragment : Fragment(), View.OnTouchListener {
         vibrator.cancel()
     }
 
+    @SuppressLint("WakelockTimeout")
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         when(event?.action){
             MotionEvent.ACTION_DOWN -> {
-                Toast.makeText(requireContext(), "down", Toast.LENGTH_SHORT).show()
                 Log.i(TAG, "onTouch: action down")
                 startVibrate()
                 mHomeViewModel.startAudio()
                 button.setImageDrawable(getDrawable(requireContext(), R.drawable.pressed))
+                wakeLock.acquire()
                 return false
             }
             MotionEvent.ACTION_UP ->{
@@ -81,6 +86,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
                 stopVibrate()
                 mHomeViewModel.stopAudio()
                 button.setImageDrawable(getDrawable(requireContext(), R.drawable.unpressed))
+                wakeLock.release()
                 return false
             }
             else -> return false
@@ -90,8 +96,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.settingsFragment_menu ->  findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
-            R.id.aboutFragment_menu -> Toast.makeText(requireContext(), "wait bro", Toast.LENGTH_SHORT)
-                .show()
+            R.id.aboutFragment_menu -> findNavController().navigate(R.id.action_homeFragment_to_aboutFragment)
                 
         }
 
