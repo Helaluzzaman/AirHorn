@@ -23,7 +23,7 @@ import com.hbsoft.airhorn.R
 import com.hbsoft.airhorn.fragments.viewModel.HomeViewModel
 
 const val TAG = "button"
-const val VIBRATIONTIME = 30  //seconds
+const val VIBRATIONTIME = 300  //seconds
 
 class HomeFragment : Fragment(), View.OnTouchListener {
     lateinit var button: ImageButton
