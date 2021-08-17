@@ -30,36 +30,38 @@
             android:layout_height="0dp"
             android:padding="16dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@string/company_name_copy_right"/>
+                android:text="@string/company_name_copy_right" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginTop="32dp"
-                android:text="@string/greeting"/>
+                android:text="@string/greeting" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:text="@string/attribution1"
-                />
+                android:text="@string/attribution1" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:text="@string/attribution3"
-                />
+                android:text="@string/attribution3" />
 
 
             <TextView
@@ -67,20 +69,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textStyle="bold"
-                android:text="@string/author"
-                />
+                android:text="@string/author" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
-                android:text="@string/AuthorName"/>
+                android:text="@string/AuthorName" />
 
             <TextView
                 android:layout_marginTop="80dp"
                 android:id="@+id/tv_privacyPolicy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/privacy_policy"/>
+                android:text="@string/privacy_policy" />
 
         </LinearLayout>
 

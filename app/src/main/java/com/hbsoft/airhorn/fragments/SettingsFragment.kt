@@ -7,7 +7,8 @@ import androidx.preference.PreferenceManager
 import com.hbsoft.airhorn.MainActivity
 import com.hbsoft.airhorn.R
 
-class SettingsFragment : PreferenceFragmentCompat(),SharedPreferences.OnSharedPreferenceChangeListener {
+class SettingsFragment : PreferenceFragmentCompat(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -15,10 +16,11 @@ class SettingsFragment : PreferenceFragmentCompat(),SharedPreferences.OnSharedPr
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if(key == "vibrate"){
+        if (key == "vibrate") {
             HomeFragment.shouldVibrate = sharedPreferences!!.getBoolean(key, true)
         }
     }
+
     override fun onResume() {
         super.onResume()
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
