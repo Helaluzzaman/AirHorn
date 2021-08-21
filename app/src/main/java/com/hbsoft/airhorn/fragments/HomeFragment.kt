@@ -96,7 +96,6 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.settingsFragment_menu ->  findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
-            R.id.aboutFragment_menu -> findNavController().navigate(R.id.action_homeFragment_to_aboutFragment)
         }
 
        
