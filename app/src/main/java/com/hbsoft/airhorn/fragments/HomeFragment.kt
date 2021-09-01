@@ -42,10 +42,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
 
     private fun setUpWakeLock() {
         val pm = activity?.getSystemService(Context.POWER_SERVICE) as PowerManager
-        wakeLock = pm.newWakeLock(
-            (PowerManager.FULL_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE),
-            "myapp:wakelock"
-        )
+        wakeLock = pm.newWakeLock((PowerManager.FULL_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE), "myapp:wakelock")
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -54,34 +51,28 @@ class HomeFragment : Fragment(), View.OnTouchListener {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val view =  inflater.inflate(R.layout.fragment_home, container, false)
         button = view.findViewById(R.id.b_press)
         button.setOnTouchListener(this)
         return view
     }
-
-    fun startVibrate() {
-        if (shouldVibrate && vibrator.hasVibrator()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        1000 * VIBRATIONTIME.toLong(),
-                        VibrationEffect.DEFAULT_AMPLITUDE
-                    )
-                )
-            } else {
-                vibrator.vibrate(1000 * VIBRATIONTIME.toLong())
+    fun startVibrate(){
+        if(shouldVibrate && vibrator.hasVibrator()){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                vibrator.vibrate(VibrationEffect.createOneShot(1000 * VIBRATIONTIME.toLong(), VibrationEffect.DEFAULT_AMPLITUDE))
+            }
+            else{
+                vibrator.vibrate(1000* VIBRATIONTIME.toLong())
             }
         }
     }
-
-    fun stopVibrate() {
+    fun stopVibrate(){
         vibrator.cancel()
     }
 
     @SuppressLint("WakelockTimeout")
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        when (event?.action) {
+        when(event?.action){
             MotionEvent.ACTION_DOWN -> {
                 Log.i(TAG, "onTouch: action down")
                 startVibrate()
@@ -90,7 +81,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
                 wakeLock.acquire()
                 return false
             }
-            MotionEvent.ACTION_UP -> {
+            MotionEvent.ACTION_UP ->{
                 Log.i(TAG, "onTouch: action up")
                 stopVibrate()
                 mHomeViewModel.stopAudio()
@@ -103,12 +94,11 @@ class HomeFragment : Fragment(), View.OnTouchListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.settingsFragment_menu -> findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
-            R.id.aboutFragment_menu -> findNavController().navigate(R.id.action_homeFragment_to_aboutFragment)
+        when(item.itemId){
+            R.id.settingsFragment_menu ->  findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
         }
 
-
+       
         return super.onOptionsItemSelected(item)
     }
 
@@ -116,8 +106,7 @@ class HomeFragment : Fragment(), View.OnTouchListener {
         inflater.inflate(R.menu.navigation, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
-
-    companion object {
+    companion object{
         var shouldVibrate = true
     }
 
